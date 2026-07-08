@@ -242,7 +242,7 @@ export function ScheduleTab() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
                   <Label>Motivo</Label>
-                  <Select value={form.reason} onValueChange={(v) => setForm((f) => ({ ...f, reason: v }))}>
+                  <Select value={form.reason ?? undefined} onValueChange={(v) => setForm((f) => ({ ...f, reason: v ?? "" }))}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
