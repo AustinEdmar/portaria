@@ -105,7 +105,7 @@ export function LoginForm({ onSubmit, loading = false, error = null }: LoginForm
             style={{ fontFamily: font.display }}
             className="text-white text-3xl font-extrabold leading-[1.15] tracking-tight max-w-sm"
           >
-            Cada visita, com crachá, hora e anfitrião registados.
+            Transforme entradas em dados, e dados em segurança.
           </p>
           <p className="text-slate-400 text-sm max-w-sm leading-relaxed">
             Controlo de acesso de visitantes para edifícios corporativos —
