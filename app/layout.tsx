@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portaria+ | Monitor de Visistas",
+  title: "Portaria+ | Monitor de Visitas",
   description: "Gestão de visitantes, agendamentos e segurança.",
 };
 
