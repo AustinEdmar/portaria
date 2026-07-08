@@ -82,11 +82,26 @@ export function OverviewTab({ onNewCheckin }: { onNewCheckin: () => void }) {
               Chegou um visitante novo?
             </p>
             <p className="text-xs text-slate-500 mt-0.5">
-              Emita o crachá e registe a entrada em menos de 30 segundos.
+              Registe a entrada em menos de 30 segundos.
             </p>
           </div>
-          <Button onClick={onNewCheckin} className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc] gap-2 shrink-0">
-            <Plus className="w-4 h-4" /> Novo check-in
+          <Button
+            onClick={onNewCheckin}
+            className="
+    bg-gradient-to-r
+    from-cyan-500
+    to-blue-500
+    hover:from-cyan-600
+    hover:to-blue-600
+    gap-2
+    shrink-0
+    shadow-[0_10px_25px_-8px_rgba(14,165,233,0.5)]
+hover:shadow-[0_14px_30px_-8px_rgba(14,165,233,0.65)]
+    transition-all
+  "
+          >
+            <Plus className="w-4 h-4" />
+            Novo check-in
           </Button>
         </CardContent>
       </Card>

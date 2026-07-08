@@ -56,8 +56,15 @@ export function Sidebar({
   onSignOut,
 }: SidebarProps) {
   const content = (
-    <div className="flex flex-col h-full bg-[#0B1220] text-slate-300 w-64">
-      <div className="px-5 py-5 flex items-center gap-2.5 border-b border-white/10">
+    <div className="relative flex flex-col h-full bg-[#0B1220] text-slate-300 w-64 overflow-hidden cursor-pointer">
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle at 1px 1px, #ffffff 1px, transparent 0)",
+          backgroundSize: "22px 22px",
+        }}
+      />
+      <div className="relative px-5 py-5 flex items-center gap-2.5 border-b border-white/10">
         <div className="w-8 h-8 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc] flex items-center justify-center shrink-0">
           <ShieldCheck className="w-4.5 h-4.5 text-white" />
         </div>
@@ -72,7 +79,7 @@ export function Sidebar({
         </button>
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-4 space-y-1 cursor-pointer">
         {NAV.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.key;
