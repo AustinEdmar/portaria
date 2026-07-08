@@ -53,7 +53,7 @@ export function LoginForm({ onSubmit, loading = false, error = null }: LoginForm
       <div className="hidden lg:flex lg:w-[45%] bg-[#0B1220] relative overflow-hidden flex-col justify-between p-10">
         {/* imagem de fundo — troca o src pela tua foto (receção, portaria, edifício, etc.) */}
         <Image
-          src="/images/security.jpg"
+          src="/images/security.jpeg"
           alt=""
           fill
           priority
