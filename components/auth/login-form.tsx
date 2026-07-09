@@ -229,31 +229,26 @@ export function LoginForm({ onSubmit, loading = false, error = null }: LoginForm
               </p>
             )}
 
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full h-11 
-               bg-gradient-to-r
-    from-cyan-500
-    to-blue-500
-    hover:from-cyan-600
-    hover:to-blue-600
-    gap-2
-    shrink-0
-    shadow-[0_10px_25px_-8px_rgba(14,165,233,0.5)]
-hover:shadow-[0_14px_30px_-8px_rgba(14,165,233,0.65)]
-    transition-all
-              "
-            >
-              {loading ? (
-                "A validar..."
-              ) : (
-                <Link href="/" className="flex items-center gap-2 font-bold">
+            <Link href="/" className="block">
+              <Button
+                className="w-full h-11
+                cursor-pointer
+      bg-gradient-to-r
+      from-cyan-500
+      to-blue-500
+      hover:from-cyan-600
+      hover:to-blue-600
+      gap-2
+      shadow-[0_10px_25px_-8px_rgba(14,165,233,0.5)]
+      hover:shadow-[0_14px_30px_-8px_rgba(14,165,233,0.65)]
+      transition-all"
+              >
+                <span className="flex items-center gap-2 font-bold">
                   Entrar
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              )}
-            </Button>
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              </Button>
+            </Link>
           </form>
 
           <div className="my-6 flex items-center gap-3">

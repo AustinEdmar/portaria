@@ -1,10 +1,8 @@
 "use client";
 
-import { Menu, Plus, Search } from "lucide-react";
+import { Bell, Menu, Plus } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { font, pageTitle } from "@/lib/typography";
 import type { NavKey } from "@/lib/types";
 
@@ -30,15 +28,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 
-/* const TITLE_MAP: Record<NavKey, string> = {
-  overview: "Painel geral",
-  visitors: "Visitantes",
-  schedule: "Agendamentos",
-  hosts: "Anfitriões",
-  reports: "Relatórios",
-  settings: "Configurações",
-  profile: "Perfil",
-}; */
 
 
 const titleMap: Record<NavKey, string> = {
@@ -87,40 +76,47 @@ export function Topbar({ active, onOpenMobileMenu, onNewCheckin, today }: Topbar
       </div>
 
       <div className="ml-auto flex items-center gap-2">
-        <div className="relative hidden lg:block">
+        {/*  <div className="relative hidden lg:block">
           <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <Input placeholder="Procurar em todo o sistema..." className="pl-8 h-9 w-64" />
-        </div>
-        {/*  <Badge variant="outline" className="hidden sm:flex gap-1.5 text-[#137a58] bg-[#1FA97C]/10 border-[#1FA97C]/30">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#1FA97C]" /> Sistema ativo
-        </Badge> */}
-        <Button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc] gap-2 cursor-pointer" onClick={onNewCheckin}>
-          <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Novo check-in</span>
+        </div> */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="
+          cursor-pointer
+          bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc] text-white
+          relative rounded-full
+          "
+        >
+          <Bell className="h-5 w-5" />
+
+          <span
+            className="absolute -top-1 -right-1 flex h-5 min-w-[20px]
+    items-center justify-center rounded-full bg-yellow-500
+    px-1 text-[10px] font-bold text-white"
+          >
+            12
+          </span>
         </Button>
+        {/*  <Button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc] gap-2 cursor-pointer" onClick={onNewCheckin}>
+          <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Novo Check-in</span>
+        </Button> */}
         {/* profile */}
         <DropdownMenu>
-          <DropdownMenuTrigger className="cursor-pointer" render={<Button variant="ghost" size="icon" className="rounded-full"><Avatar>
+          <DropdownMenuTrigger className="cursor-pointer" render={<Button variant="ghost" size="icon" className="rounded-full" ><Avatar>
             <AvatarImage src="https://github.com/shadcn.png" alt="shadcn" />
             <AvatarFallback>LR</AvatarFallback>
           </Avatar></Button>} />
           <DropdownMenuContent align="end" >
-            <DropdownMenuGroup>
-              {/* <DropdownMenuItem>
-                <BadgeCheckIcon />
-                <Link href="/profile" className="ml-2 font-medium">
-                  Perfil
-                </Link>
-              </DropdownMenuItem> */}
-              {/* <DropdownMenuItem>
-                <CreditCardIcon />
-                Billing
-              </DropdownMenuItem> */}
+            {/* <DropdownMenuGroup>
+
               <DropdownMenuItem>
                 <BellIcon />
                 Notificacoes
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator /> */}
             <DropdownMenuItem className="bg-red-50 text-red-600 hover:bg-red-100 focus:bg-red-100 cursor-pointer">
               <LogOutIcon className="h-4 w-4" />
               <Link href="/login" className="ml-2 font-medium">

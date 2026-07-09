@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Fab } from "@/components/Fab";
+import { CheckinDialogProvider } from "@/components/checkin-dialog-context";
+import { ScheduleDialogProvider } from "@/components/schedule-dialog-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +30,14 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <CheckinDialogProvider>
+          <ScheduleDialogProvider>
+            {children}
+            <Fab />
+          </ScheduleDialogProvider>
+        </CheckinDialogProvider>
+      </body>
     </html>
   );
 }

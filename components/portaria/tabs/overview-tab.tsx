@@ -9,8 +9,12 @@ import { MiniBarChart } from "../mini-bar-chart";
 import { font, eyebrow, sectionTitle, monoData } from "@/lib/typography";
 import { initials } from "@/lib/utils-portaria";
 import { VISITORS, OCCUPANCY_TODAY } from "@/lib/mock-data";
+import { useCheckinDialog } from "@/components/checkin-dialog-context";
+import { GRADIENTS } from "@/lib/colors";
 
-export function OverviewTab({ onNewCheckin }: { onNewCheckin: () => void }) {
+export function OverviewTab() {
+  const { openCheckin } = useCheckinDialog();
+
   const now = VISITORS.filter((v) => v.status === "No prédio");
   const scheduled = VISITORS.filter((v) => v.status === "Agendado");
   const late = VISITORS.filter((v) => v.status === "Atrasado");
@@ -75,7 +79,7 @@ export function OverviewTab({ onNewCheckin }: { onNewCheckin: () => void }) {
         </Card>
       </div>
 
-      <Card className="border-slate-200 border-dashed">
+      {/*  <Card className="border-slate-200 border-dashed">
         <CardContent className="py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div>
             <p style={{ fontFamily: font.display }} className="font-bold text-slate-800 text-sm">
@@ -86,25 +90,14 @@ export function OverviewTab({ onNewCheckin }: { onNewCheckin: () => void }) {
             </p>
           </div>
           <Button
-            onClick={onNewCheckin}
-            className="
-    bg-gradient-to-r
-    from-cyan-500
-    to-blue-500
-    hover:from-cyan-600
-    hover:to-blue-600
-    gap-2
-    shrink-0
-    shadow-[0_10px_25px_-8px_rgba(14,165,233,0.5)]
-hover:shadow-[0_14px_30px_-8px_rgba(14,165,233,0.65)]
-    transition-all
-  "
+            onClick={openCheckin}
+            className={`${GRADIENTS.primary} gap-2 shrink-0 shadow-[0_10px_25px_-8px_rgba(14,165,233,0.5)] hover:shadow-[0_14px_30px_-8px_rgba(14,165,233,0.65)] transition-all`}
           >
             <Plus className="w-4 h-4" />
             Novo check-in
           </Button>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }

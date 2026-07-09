@@ -33,7 +33,7 @@ const NAV: NavItem[] = [
   { key: "hosts", label: "Funcionarios", icon: Building2 },
   { key: "reports", label: "Relatórios", icon: FileBarChart },
   { key: "settings", label: "Configurações", icon: Settings },
-  { key: "profile", label: "Perfil", icon: User2 },
+  //{ key: "profile", label: "Perfil", icon: User2 },
 ];
 
 interface SidebarProps {
@@ -90,7 +90,7 @@ export function Sidebar({
                 setActive(item.key);
                 setMobileOpen(false);
               }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${isActive ? "bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc] text-white font-medium" : "hover:bg-white/5 text-slate-300"
+              className={`w-full flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-lg text-sm transition-colors ${isActive ? "bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc] text-white font-medium" : "hover:bg-white/5 text-slate-300"
                 }`}
             >
               <Icon className="w-4 h-4 shrink-0" />
@@ -101,7 +101,13 @@ export function Sidebar({
         })}
       </nav>
 
-      <div className="px-4 py-4 cursor-pointer border-t border-white/10">
+      <div
+        onClick={() => {
+          setActive("profile");
+          setMobileOpen(false);
+        }}
+        className="px-4 py-4 cursor-pointer border-t border-white/10 bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc]"
+      >
         <div className="flex items-center gap-2.5">
           <Avatar className="h-8 w-8 shrink-0">
             <AvatarFallback className="bg-white/10 text-white text-xs">
@@ -110,15 +116,24 @@ export function Sidebar({
           </Avatar>
           <div className="min-w-0 flex-1">
             <p className="text-xs font-medium text-white truncate">{userName}</p>
-            <p className="text-[11px] text-slate-500 truncate">{userEmail}</p>
+            <p className="text-[11px]  truncate">{userEmail}</p>
           </div>
           {onSignOut && (
-            <button onClick={onSignOut} className="text-slate-500 hover:text-white shrink-0" aria-label="Terminar sessão">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onSignOut?.();
+              }}
+              className="text-red-500 shrink-0 transition-colors"
+              aria-label="Terminar sessão"
+            >
               <LogOut className="w-4 h-4" />
             </button>
           )}
         </div>
       </div>
+
+
     </div>
   );
 

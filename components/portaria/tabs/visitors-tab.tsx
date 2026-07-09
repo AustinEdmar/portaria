@@ -26,13 +26,14 @@ import { font, eyebrow, sectionTitle, monoData } from "@/lib/typography";
 import { initials } from "@/lib/utils-portaria";
 import { VISITORS } from "@/lib/mock-data";
 import type { Visitor, VisitorStatus } from "@/lib/types";
+import { useCheckinDialog } from "@/components/checkin-dialog-context";
 
 interface VisitorsTabProps {
-  onNewCheckin: () => void;
   onSelect: (visitor: Visitor) => void;
 }
 
-export function VisitorsTab({ onNewCheckin, onSelect }: VisitorsTabProps) {
+export function VisitorsTab({ onSelect }: VisitorsTabProps) {
+  const { openCheckin } = useCheckinDialog();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"Todos" | VisitorStatus>("Todos");
 
@@ -77,7 +78,7 @@ export function VisitorsTab({ onNewCheckin, onSelect }: VisitorsTabProps) {
               <SelectItem value="Finalizado">Finalizado</SelectItem>
             </SelectContent>
           </Select>
-          <Button onClick={onNewCheckin} className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc] gap-2 h-9 cursor-pointer" >
+          <Button onClick={openCheckin} className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc] gap-2 h-9 cursor-pointer">
             <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Novo</span>
           </Button>
         </div>

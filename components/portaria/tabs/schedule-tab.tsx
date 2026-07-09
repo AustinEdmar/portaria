@@ -34,11 +34,8 @@ import {
 import { StatCard } from "../stat-card";
 import { font, eyebrow, sectionTitle } from "@/lib/typography";
 import { VISITORS } from "@/lib/mock-data";
-
-// --- Types ---------------------------------------------------------------
-// Assumes VISITORS items look like { id, name, reason, host, expected, status }.
-// `date` is treated as optional in the source data — items without it are
-// pinned to "today" so the tab works even if mock-data hasn't been extended.
+import { useScheduleDialog } from "@/components/schedule-dialog-context";
+import { todayISO, type NewScheduleForm } from "@/components/new-schedule-dialog";
 
 type VisitorStatus = "Agendado" | "Pré-aprovado" | "Cancelado" | string;
 
@@ -51,12 +48,6 @@ interface ScheduledVisitor {
   date?: string; // "YYYY-MM-DD"
   status: VisitorStatus;
   [key: string]: any;
-}
-
-const REASONS = ["Reunião", "Entrevista", "Entrega", "Visita técnica", "Formação", "Outro"];
-
-function todayISO() {
-  return new Date().toISOString().slice(0, 10);
 }
 
 function addDaysISO(days: number) {
@@ -82,24 +73,14 @@ function formatDateLabel(iso?: string) {
   return label.charAt(0).toUpperCase() + label.slice(1);
 }
 
-const emptyForm = {
-  name: "",
-  reason: REASONS[0],
-  host: "",
-  date: todayISO(),
-  time: "09:00",
-};
-
-// --- Component -------------------------------------------------------------
-
 export function ScheduleTab() {
+  const { openSchedule } = useScheduleDialog();
+
   const [visitors, setVisitors] = useState<ScheduledVisitor[]>(() =>
     (VISITORS as ScheduledVisitor[]).map((v) => ({ ...v, date: v.date ?? todayISO() }))
   );
   const [search, setSearch] = useState("");
   const [dayFilter, setDayFilter] = useState<"all" | "today" | "tomorrow">("all");
-  const [isNewOpen, setIsNewOpen] = useState(false);
-  const [form, setForm] = useState(emptyForm);
   const [rescheduleTarget, setRescheduleTarget] = useState<ScheduledVisitor | null>(null);
   const [rescheduleForm, setRescheduleForm] = useState({ date: todayISO(), time: "09:00" });
 
@@ -139,20 +120,19 @@ export function ScheduleTab() {
   const preApprovedCount = scheduled.filter((v) => v.status === "Pré-aprovado").length;
   const todayCount = scheduled.filter((v) => formatDateLabel(v.date) === "Hoje").length;
 
-  function handleCreate() {
-    if (!form.name.trim() || !form.host.trim()) return;
-    const newVisitor: ScheduledVisitor = {
-      id: `sch-${Date.now()}`,
-      name: form.name.trim(),
-      reason: form.reason,
-      host: form.host.trim(),
-      expected: form.time,
-      date: form.date,
-      status: "Agendado",
-    };
-    setVisitors((prev) => [...prev, newVisitor]);
-    setForm(emptyForm);
-    setIsNewOpen(false);
+  function handleNewSchedule() {
+    openSchedule((form: NewScheduleForm) => {
+      const newVisitor: ScheduledVisitor = {
+        id: `sch-${Date.now()}`,
+        name: form.name.trim(),
+        reason: form.reason,
+        host: form.host.trim(),
+        expected: form.time,
+        date: form.date,
+        status: "Agendado",
+      };
+      setVisitors((prev) => [...prev, newVisitor]);
+    });
   }
 
   function openReschedule(v: ScheduledVisitor) {
@@ -220,86 +200,12 @@ export function ScheduleTab() {
           </Select>
         </div>
 
-        <Dialog open={isNewOpen} onOpenChange={setIsNewOpen}>
-          <Button className="gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc]" onClick={() => setIsNewOpen(true)}>
-            <CalendarPlus className="w-4 h-4" /> Novo agendamento
-          </Button>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle style={{ fontFamily: font.display }}>Novo agendamento</DialogTitle>
-              <DialogDescription>Preencha os dados da visita para agendar a entrada.</DialogDescription>
-            </DialogHeader>
-            <div className="space-y-3 py-2">
-              <div className="space-y-1.5">
-                <Label htmlFor="v-name">Nome do visitante</Label>
-                <Input
-                  id="v-name"
-                  value={form.name}
-                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  placeholder="Ex: Ana Ferreira"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label>Motivo</Label>
-                  <Select value={form.reason ?? undefined} onValueChange={(v) => setForm((f) => ({ ...f, reason: v ?? "" }))}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {REASONS.map((r) => (
-                        <SelectItem key={r} value={r}>
-                          {r}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="v-host">Anfitrião</Label>
-                  <Input
-                    id="v-host"
-                    value={form.host}
-                    onChange={(e) => setForm((f) => ({ ...f, host: e.target.value }))}
-                    placeholder="Ex: João Neto"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor="v-date">Data</Label>
-                  <Input
-                    id="v-date"
-                    type="date"
-                    value={form.date}
-                    onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="v-time">Hora</Label>
-                  <Input
-                    id="v-time"
-                    type="time"
-                    value={form.time}
-                    onChange={(e) => setForm((f) => ({ ...f, time: e.target.value }))}
-                  />
-                </div>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsNewOpen(false)}>
-                Cancelar
-              </Button>
-              <Button
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc]"
-                onClick={handleCreate}
-                disabled={!form.name.trim() || !form.host.trim()}
-              >
-                Agendar
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <Button
+          className="gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-[#1d40cc]"
+          onClick={handleNewSchedule}
+        >
+          <CalendarPlus className="w-4 h-4" /> Novo agendamento
+        </Button>
       </div>
 
       {/* List */}
@@ -396,7 +302,7 @@ export function ScheduleTab() {
         </CardContent>
       </Card>
 
-      {/* Reschedule dialog */}
+      {/* Reschedule dialog — continua local, só o "Novo agendamento" foi extraído */}
       <Dialog open={!!rescheduleTarget} onOpenChange={(open) => !open && setRescheduleTarget(null)}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>

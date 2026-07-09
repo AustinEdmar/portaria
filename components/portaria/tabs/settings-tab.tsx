@@ -97,7 +97,7 @@ export function SettingsTab() {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200">
+      {/* <Card className="border-slate-200">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Bell className="w-4 h-4 text-slate-400" />
@@ -127,9 +127,9 @@ export function SettingsTab() {
             onCheckedChange={setNotifyLateAlert}
           />
         </CardContent>
-      </Card>
+      </Card> */}
 
-      <Card className="border-slate-200">
+      {/* <Card className="border-slate-200">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Plug className="w-4 h-4 text-slate-400" />
@@ -148,7 +148,7 @@ export function SettingsTab() {
             Configurar integração
           </Button>
         </CardContent>
-      </Card>
+      </Card> */}
 
       <Separator />
 
