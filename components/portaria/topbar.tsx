@@ -55,11 +55,11 @@ const subtitleMap: Record<NavKey, string> = {
 interface TopbarProps {
   active: NavKey;
   onOpenMobileMenu: () => void;
-  onNewCheckin: () => void;
+  onNewCheckin?: () => void;
   today: string;
 }
 
-export function Topbar({ active, onOpenMobileMenu, onNewCheckin, today }: TopbarProps) {
+export function Topbar({ active, onOpenMobileMenu, today }: TopbarProps) {
   return (
     <header className="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-slate-200 px-4 sm:px-6 py-3.5 flex items-center gap-3">
       <button className="md:hidden text-slate-500" onClick={onOpenMobileMenu} aria-label="Abrir menu">
