@@ -268,7 +268,7 @@ export function ReportsTab() {
         <Card className="border-slate-200">
           <CardHeader className="pb-0">
             <p className={eyebrow}>Volume</p>
-            <CardTitle style={{ fontFamily: font.display }} className={`${sectionTitle} text-base mt-0.5`}>
+            <CardTitle style={{ fontFamily: font.display }} className={`${sectionTitle} text-base text-slate-600  mt-0.5`}>
               Entradas por dia
             </CardTitle>
           </CardHeader>
